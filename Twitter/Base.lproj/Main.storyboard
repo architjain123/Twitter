@@ -179,11 +179,19 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/280" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rmg-TU-ti7">
+                                <rect key="frame" x="312" y="268" width="47" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemGray6Color" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="mYB-QW-I9P" firstAttribute="trailing" secondItem="rmg-TU-ti7" secondAttribute="trailing" constant="16" id="4Om-h0-kzW"/>
                             <constraint firstItem="Sii-nt-55B" firstAttribute="top" secondItem="mYB-QW-I9P" secondAttribute="top" constant="16" id="krz-hZ-M7T"/>
                             <constraint firstItem="Sii-nt-55B" firstAttribute="leading" secondItem="mYB-QW-I9P" secondAttribute="leading" constant="16" id="oTn-t9-BOO"/>
+                            <constraint firstItem="rmg-TU-ti7" firstAttribute="top" secondItem="Sii-nt-55B" secondAttribute="bottom" constant="8" id="vbE-dj-RaR"/>
                             <constraint firstItem="mYB-QW-I9P" firstAttribute="trailing" secondItem="Sii-nt-55B" secondAttribute="trailing" constant="16" id="whg-MF-031"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="mYB-QW-I9P"/>
@@ -203,6 +211,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="charCountLabel" destination="rmg-TU-ti7" id="rLQ-Tg-Oe4"/>
                         <outlet property="tweetTextView" destination="Sii-nt-55B" id="aYc-3x-kda"/>
                     </connections>
                 </viewController>
