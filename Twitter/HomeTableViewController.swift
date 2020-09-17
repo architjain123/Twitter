@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AlamofireImage
 
 class HomeTableViewController: UITableViewController {
     
@@ -17,19 +16,32 @@ class HomeTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadTweets()
-        
         tweetsRefreshControl.addTarget(self, action: #selector(loadTweets), for: .valueChanged)
         self.tableView.refreshControl = tweetsRefreshControl
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        loadTweets()
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tweetCell", for: indexPath) as! TweetCellTableViewCell
+        
         let user = tweetArray[indexPath.row]["user"] as! NSDictionary
         cell.userNameLabel.text = user["name"] as? String
         cell.tweetContent.text = tweetArray[indexPath.row]["text"] as? String
-        let imageUrl = URL(string: (user["profile_image_url_https"] as? String)!)!
-        cell.profileImageView.af_setImage(withURL: imageUrl)
+        
+        let imageUrl = URL(string: (user["profile_image_url_https"] as! String))!
+        let data = try? Data(contentsOf: imageUrl)
+        if let imageData = data {
+            cell.profileImageView.image = UIImage(data: imageData)
+        }
+        cell.timeLabel.text = getRelativeTime(timeString: tweetArray[indexPath.row]["created_at"] as! String)
+        
+        cell.setFavourite(tweetArray[indexPath.row]["favorited"] as! Bool)
+        cell.tweetId = tweetArray[indexPath.row]["id"] as! Int
+        cell.setRetweeted(tweetArray[indexPath.row]["retweeted"] as! Bool)
         return cell
     }
     
@@ -82,12 +94,38 @@ class HomeTableViewController: UITableViewController {
         })
     }
     
-    
-    
-    
     @IBAction func onLogout(_ sender: Any) {
         TwitterAPICaller.client?.logout()
         self.dismiss(animated: true, completion: nil)
         UserDefaults.standard.set(false, forKey: "userLoggedIn")
+    }
+    
+    func getRelativeTime(timeString: String) -> String{
+        let time: Date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
+        time = dateFormatter.date(from: timeString)!
+        return time.timeAgoDisplay()
+    }
+}
+
+extension Date {
+    func timeAgoDisplay() -> String {
+        let secondsAgo = Int(Date().timeIntervalSince(self))
+        let minute = 60
+        let hour = 60 * minute
+        let day = 24 * hour
+        let week = 7 * day
+        
+        if secondsAgo < minute {
+                return "\(secondsAgo)s"
+            } else if secondsAgo < hour {
+                return "\(secondsAgo / minute)m"
+            } else if secondsAgo < day {
+                return "\(secondsAgo / hour)h"
+            } else if secondsAgo < week {
+                return "\(secondsAgo / day)d"
+            }
+        return "\(secondsAgo / week)w"
     }
 }
