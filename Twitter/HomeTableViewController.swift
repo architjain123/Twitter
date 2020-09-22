@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AlamofireImage
 
 class HomeTableViewController: UITableViewController {
     
@@ -42,6 +43,17 @@ class HomeTableViewController: UITableViewController {
         cell.setFavourite(tweetArray[indexPath.row]["favorited"] as! Bool)
         cell.tweetId = tweetArray[indexPath.row]["id"] as! Int
         cell.setRetweeted(tweetArray[indexPath.row]["retweeted"] as! Bool)
+        
+        if (containsMedia(details: tweetArray[indexPath.row])){
+            let mediaURLString = getMediaUrl(details: tweetArray[indexPath.row])
+            cell.mediaImageView.isHidden = false
+            cell.mediaImageView.af_setImage(withURL: URL(string: mediaURLString)!)
+            print(mediaURLString)
+        }
+        else{
+            cell.mediaImageView.isHidden = true
+        }
+        
         return cell
     }
     
@@ -61,6 +73,15 @@ class HomeTableViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if (containsMedia(details: tweetArray[indexPath.row])){
+            return 280
+        }
+        else{
+            return 130
+        }
+    }
+    
     @objc func loadTweets(){
         
         let tweetsUrl = "https://api.twitter.com/1.1/statuses/home_timeline.json"
@@ -73,6 +94,8 @@ class HomeTableViewController: UITableViewController {
             }
             self.tableView.reloadData()
             self.tweetsRefreshControl.endRefreshing()
+            
+//            print(self.tweetArray)
             
         } , failure: {(Error) in
             print("Could not retrieve tweets")
@@ -98,6 +121,32 @@ class HomeTableViewController: UITableViewController {
         TwitterAPICaller.client?.logout()
         self.dismiss(animated: true, completion: nil)
         UserDefaults.standard.set(false, forKey: "userLoggedIn")
+    }
+    
+    
+    func containsMedia(details: NSDictionary)->Bool{
+        
+        if (details["entities"] != nil){
+            let entities = details["entities"] as! NSDictionary
+            if (entities["media"] != nil){
+                let media = entities["media"] as! [NSDictionary]
+//                let mediaUrl = media[0]["media_url_https"] as! String
+                return true
+            }
+        }
+        return false
+    }
+    
+    func getMediaUrl(details: NSDictionary)->String{
+        
+        if (details["entities"] != nil){
+            let entities = details["entities"] as! NSDictionary
+            if (entities["media"] != nil){
+                let media = entities["media"] as! [NSDictionary]
+                return media[0]["media_url_https"] as! String
+            }
+        }
+        return ""
     }
     
     func getRelativeTime(timeString: String) -> String{

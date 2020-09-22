@@ -110,13 +110,23 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7IM-p0-0kc">
+                                            <rect key="frame" x="94" y="60" width="150" height="150"/>
+                                            <color key="backgroundColor" systemColor="systemGray2Color" red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="150" id="32R-cn-YDg"/>
+                                                <constraint firstAttribute="height" constant="150" id="yU4-YS-AeD"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="ERA-MF-Yty" firstAttribute="trailing" secondItem="h4H-Hl-d3p" secondAttribute="trailingMargin" id="6h7-tc-4tL"/>
                                         <constraint firstItem="dWC-J2-V9x" firstAttribute="top" secondItem="ERA-MF-Yty" secondAttribute="bottom" constant="5" id="BG9-ag-YM7"/>
                                         <constraint firstItem="dWC-J2-V9x" firstAttribute="leading" secondItem="Wmu-z3-Z26" secondAttribute="trailing" constant="8" id="BKg-oE-j1i"/>
                                         <constraint firstItem="TtE-cp-Uek" firstAttribute="trailing" secondItem="h4H-Hl-d3p" secondAttribute="trailingMargin" id="F9c-cZ-ypP"/>
+                                        <constraint firstItem="7IM-p0-0kc" firstAttribute="leading" secondItem="Wmu-z3-Z26" secondAttribute="trailing" constant="8" id="NZv-Zi-jyZ"/>
                                         <constraint firstAttribute="bottom" secondItem="Ood-mx-O1n" secondAttribute="bottom" constant="2" id="NgT-lL-GIY"/>
+                                        <constraint firstItem="7IM-p0-0kc" firstAttribute="top" secondItem="dWC-J2-V9x" secondAttribute="bottom" constant="8" id="TTa-Tc-Y74"/>
                                         <constraint firstItem="ERA-MF-Yty" firstAttribute="top" secondItem="h4H-Hl-d3p" secondAttribute="topMargin" id="Xcj-Du-xR9"/>
                                         <constraint firstItem="Wmu-z3-Z26" firstAttribute="leading" secondItem="h4H-Hl-d3p" secondAttribute="leadingMargin" id="Zdt-NL-7sm"/>
                                         <constraint firstItem="dWC-J2-V9x" firstAttribute="trailing" secondItem="h4H-Hl-d3p" secondAttribute="trailingMargin" id="bAm-oU-6qG"/>
@@ -130,6 +140,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="favButton" destination="XDK-Vu-il1" id="PJp-TN-VNb"/>
+                                    <outlet property="mediaImageView" destination="7IM-p0-0kc" id="OZE-B8-eMC"/>
                                     <outlet property="profileImageView" destination="Wmu-z3-Z26" id="rBt-6I-Wo0"/>
                                     <outlet property="retweetButton" destination="Ood-mx-O1n" id="CHL-vc-FE1"/>
                                     <outlet property="timeLabel" destination="ERA-MF-Yty" id="IvR-zS-OFz"/>

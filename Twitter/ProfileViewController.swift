@@ -37,7 +37,6 @@ class ProfileViewController: UIViewController {
     }
     
     func displayProfile(){
-        print(profile)
         nameLabel.text = self.profile["name"] as? String
         screenNameLabel.text = "@" + ((self.profile["screen_name"] as? String)!)
         descriptionLabel.text = self.profile["description"] as? String
@@ -45,7 +44,5 @@ class ProfileViewController: UIViewController {
         followersLabel.text = "\(self.profile["followers_count"] as? Int ?? 0)"
         profileImageView.layer.cornerRadius = profileImageView.frame.height/2
         profileImageView.af_setImage(withURL: URL(string: profile["profile_image_url_https"] as! String)!)
-
     }
-
 }
